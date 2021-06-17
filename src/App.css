@@ -43,9 +43,7 @@ button {
 }
 
 #by {
-  font-size: 80%;
   color: #ffffff44;
-  margin-top: 0;
 }
 
 #remaining {
@@ -58,6 +56,19 @@ button {
   bottom: 16px;
   right: 16px;
   margin: 0;
+}
+
+#toggleUncleMode {
+  z-index: 1;
+  background-color: #4caf5080;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 10px;
 }
 
 p {

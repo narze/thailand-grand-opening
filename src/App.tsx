@@ -1,61 +1,98 @@
-import React, { useEffect, useState } from 'react'
-import dayjs from "dayjs"
-import relativeTime from 'dayjs/plugin/relativeTime'
-import 'dayjs/locale/th'
+import React, { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/th";
 import {
   FacebookShareButton,
   LineShareButton,
   TwitterShareButton,
   FacebookIcon,
-TwitterIcon,
-LineIcon,
+  TwitterIcon,
+  LineIcon,
 } from "react-share";
 
-import './App.css'
+import "./App.css";
 
-dayjs.extend(relativeTime)
-dayjs.locale("th")
+dayjs.extend(relativeTime);
+dayjs.locale("th");
 
 function App() {
-  const [elapsed, setElapsed] = useState("...")
-  const [days, setDays] = useState("...")
-  const [hours, setHours] = useState("...")
-  const [minutes, setMinutes] = useState("...")
-  const [seconds, setSeconds] = useState("...")
+  const [uncleMode, setUncleMode] = useState(true);
+  const [elapsed, setElapsed] = useState("...");
+  const [days, setDays] = useState("...");
+  const [hours, setHours] = useState("...");
+  const [minutes, setMinutes] = useState("...");
+  const [seconds, setSeconds] = useState("...");
 
-  const startTime = dayjs('2021-06-16T18:00:00+07:00')
-  const promisedTime = startTime.add(120, 'day')
+  const uncleSaidTime = dayjs("2021-06-16T18:00:00+07:00");
+  const actualStartTime = dayjs("2021-07-01T00:00:00+07:00");
 
   useEffect(() => {
     const interval = setInterval(() => {
-    setElapsed(dayjs().from(startTime, true))
-    setDays(promisedTime.diff(dayjs(), "day").toLocaleString() + " วัน")
-    setHours((promisedTime.diff(dayjs(), "hour") % 24).toLocaleString() + " ชั่วโมง")
-    setMinutes((promisedTime.diff(dayjs(), "minute") % 60).toLocaleString() + " นาที")
-    setSeconds((promisedTime.diff(dayjs(), "second") % 60).toLocaleString() + " วินาที")
-    })
+      setElapsed(dayjs().from(uncleSaidTime, true));
 
-    return () => { clearInterval(interval) }
-  }, [])
+      let promisedTime;
+
+      if (uncleMode) {
+        promisedTime = uncleSaidTime.add(120, "day");
+      } else {
+        promisedTime = actualStartTime.add(120, "day");
+      }
+
+      setDays(promisedTime.diff(dayjs(), "day").toLocaleString() + " วัน");
+      setHours(
+        (promisedTime.diff(dayjs(), "hour") % 24).toLocaleString() + " ชั่วโมง"
+      );
+      setMinutes(
+        (promisedTime.diff(dayjs(), "minute") % 60).toLocaleString() + " นาที"
+      );
+      setSeconds(
+        (promisedTime.diff(dayjs(), "second") % 60).toLocaleString() + " วินาที"
+      );
+    });
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [uncleMode]);
 
   return (
     <div className="App">
       <header className="App-header">
-        <p>“ผมตั้งเป้าเอาไว้ว่า ประเทศไทยจะต้องเปิดประเทศทั้งประเทศ ให้ได้ภายใน 120 วัน”</p>
-        <p id="by">ลุง - 16 มิ.ย. 2564 18:00 น.</p>
-        <p>
-          ตอนนี้ผ่านมาแล้ว {elapsed} ลุงเหลือเวลา...
-        </p>
-        <p id="remaining">
-          {days}
-        </p>
+        {uncleMode && (
+          <>
+            <p>
+              “ผมตั้งเป้าเอาไว้ว่า ประเทศไทยจะต้องเปิดประเทศทั้งประเทศ
+              ให้ได้ภายใน 120 วัน”
+            </p>
+            <p id="by">ลุง - 16 มิ.ย. 2564 18:00 น.</p>
+          </>
+        )}
+        {!uncleMode && (
+          <>
+            <p>
+              <s>
+                “ผมตั้งเป้าเอาไว้ว่า ประเทศไทยจะต้องเปิดประเทศทั้งประเทศ
+                ให้ได้ภายใน 120 วัน”
+              </s>
+            </p>
+            <p>ลูกน้องลุง : ลุงพูดผิด จริงๆ แล้วจะเริ่ม 1 ก.ค. จ้า</p>
+          </>
+        )}
+        <a id="toggleUncleMode" onClick={() => setUncleMode(!uncleMode)}>
+          Mode : {uncleMode ? "เชื่อลุงดีกว่า" : "ฟังลูกน้องลุง"}
+        </a>
+
+        <p>ตอนนี้ผ่านมาแล้ว {elapsed} ลุงเหลือเวลา...</p>
+        <p id="remaining">{days}</p>
         <p id="remaining-detail">
           {hours} {minutes} {seconds}
         </p>
         <p id="social">
           <FacebookShareButton
             url="https://thailand-grand-opening.web.app/"
-            quote={`ลุงเหลือเวลา ${days} ในการเปิดประเทศ`}>
+            quote={`ลุงเหลือเวลา ${days} ในการเปิดประเทศ`}
+          >
             <FacebookIcon size={46} />
           </FacebookShareButton>
           <TwitterShareButton
@@ -70,7 +107,7 @@ function App() {
         </p>
       </header>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

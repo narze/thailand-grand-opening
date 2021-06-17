@@ -13,10 +13,27 @@
     <script src="/__/firebase/8.6.7/firebase-analytics.js"></script>
 
     <!-- Initialize Firebase -->
-    <script src="/__/firebase/init.js"></script>
+    <!-- <script src="/__/firebase/init.js"></script> -->
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      fetch('/__/firebase/init.json').then(async response => {
+        const result = firebase.initializeApp(await response.json());
+        console.log({ result })
+      });
+    </script>
+
+    <!-- Ko-fi -->
+    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+    <script>
+      kofiWidgetOverlay.draw('narze', {
+        'type': 'floating-chat',
+        'floating-chat.donateButton.text': 'Support me',
+        'floating-chat.donateButton.background-color': '#f45d22',
+        'floating-chat.donateButton.text-color': '#fff'
+      });
+    </script>
   </body>
 </html>

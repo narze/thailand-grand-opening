@@ -53,6 +53,13 @@ button {
   font-size: 24vw;
 }
 
+#social {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  margin: 0;
+}
+
 p {
   margin: 10px auto;
 }

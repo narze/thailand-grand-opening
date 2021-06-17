@@ -1,5 +1,7 @@
 # Thailand Grand Opening
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/J3J04WA0F)
+
 A simple countdown website
 
 ## Built with

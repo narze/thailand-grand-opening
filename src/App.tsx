@@ -17,7 +17,7 @@ dayjs.extend(relativeTime);
 dayjs.locale("th");
 
 function App() {
-  const [uncleMode, setUncleMode] = useState(true);
+  const [uncleMode, setUncleMode] = useState(false);
   const [elapsed, setElapsed] = useState("...");
   const [days, setDays] = useState("...");
   const [hours, setHours] = useState("...");

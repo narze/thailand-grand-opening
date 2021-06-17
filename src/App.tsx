@@ -23,7 +23,7 @@ function App() {
   const [minutes, setMinutes] = useState("...")
   const [seconds, setSeconds] = useState("...")
 
-  const startTime = dayjs('2021-06-16 18:00 +0700')
+  const startTime = dayjs('2021-06-16T18:00:00+07:00')
   const promisedTime = startTime.add(120, 'day')
 
   useEffect(() => {

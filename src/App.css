@@ -58,11 +58,11 @@ button {
   margin: 0;
 }
 
-#toggleUncleMode {
+#toggleMode {
   z-index: 1;
   background-color: #4caf5080;
   color: white;
-  padding: 15px 32px;
+  padding: 8px 24px;
   text-align: center;
   text-decoration: none;
   display: inline-block;

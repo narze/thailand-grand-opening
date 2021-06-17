@@ -4,6 +4,32 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta property="og:url" content="https://thailand-grand-opening.web.app/" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="ลุงเหลือเวลาเท่าไหร่ในการเปิดประเทศ?"
+    />
+    <meta
+      property="og:description"
+      content="เราจะทำตามสัญญา ขอเวลาอีกไม่นาน v2"
+    />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/narze/timelapse/master/projects/thailand-grand-opening_home.png"
+    />
+
+    <meta
+      name="twitter:title"
+      content="ลุงเหลือเวลาเท่าไหร่ในการเปิดประเทศ?"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/narze/timelapse/master/projects/thailand-grand-opening_home.png"
+    />
+
     <title>Thailand Grand Opening</title>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="/__/firebase/8.6.7/firebase-app.js"></script>
@@ -13,17 +39,20 @@
     <script src="/__/firebase/8.6.7/firebase-analytics.js"></script>
 
     <!-- Initialize Firebase -->
-    <!-- <script src="/__/firebase/init.js"></script> -->
+    <script src="/__/firebase/init.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GE0MF4LYTX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-GE0MF4LYTX');
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      fetch('/__/firebase/init.json').then(async response => {
-        const result = firebase.initializeApp(await response.json());
-        console.log({ result })
-      });
-    </script>
 
     <!-- Ko-fi -->
     <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>

@@ -12,6 +12,7 @@ import {
 } from "react-share";
 
 import "./App.css";
+import Progress from "./components/progress";
 
 dayjs.extend(relativeTime);
 dayjs.locale("th");
@@ -37,6 +38,7 @@ function App() {
   const [hours, setHours] = useState("...");
   const [minutes, setMinutes] = useState("...");
   const [seconds, setSeconds] = useState("...");
+  const [progress, setProgress] = useState(0);
 
   const uncleSaidTime = dayjs("2021-06-16T18:00:00+07:00");
   const actualStartTime = dayjs("2021-07-01T00:00:00+07:00");
@@ -63,7 +65,7 @@ function App() {
   }
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const updateCounter = () => {
       let now = dayjs();
       setElapsed(now.from(uncleSaidTime, true));
 
@@ -87,7 +89,11 @@ function App() {
           break;
       }
 
+      let totalDays = promisedTime.diff(uncleSaidTime, "day");
+      let elapsedDays = now.diff(uncleSaidTime, "day");
+
       if (spokespersonMode) {
+        totalDays = 120;
         [now, promisedTime] = [promisedTime, now];
       }
 
@@ -101,7 +107,17 @@ function App() {
       setSeconds(
         (promisedTime.diff(now, "second") % 60).toLocaleString() + " วินาที"
       );
-    });
+
+      const handicap = 5;
+
+      setProgress(
+        Math.min(1, (elapsedDays + handicap) / (totalDays + handicap))
+      );
+
+      return updateCounter;
+    };
+
+    const interval = setInterval(updateCounter(), 1000);
 
     return () => {
       clearInterval(interval);
@@ -174,6 +190,8 @@ function App() {
         <p id="remaining-detail">
           {hours} {minutes} {seconds}
         </p>
+
+        <Progress animate={progress} />
 
         <p id="social">
           <FacebookShareButton

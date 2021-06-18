@@ -20,7 +20,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 1.6vmin);
   padding: 0 48px;
   color: white;
 }
@@ -39,7 +39,7 @@
 }
 
 button {
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 1.6vmin);
 }
 
 #by {
@@ -48,12 +48,12 @@ button {
 
 #remaining {
   margin: -4vw auto -2vw auto;
-  font-size: 24vw;
+  font-size: 20vw;
 }
 
 #social {
   position: fixed;
-  bottom: 16px;
+  bottom: 14px;
   right: 16px;
   margin: 0;
 }
@@ -73,6 +73,13 @@ button {
 
 #thisIsNotButton {
   color: #ffffff44;
+}
+
+#progress {
+  margin: 8px;
+  width: 800px;
+  max-width: 100%;
+  height: 20px;
 }
 
 p {

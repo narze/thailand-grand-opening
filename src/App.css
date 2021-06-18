@@ -71,6 +71,10 @@ button {
   margin: 10px;
 }
 
+#thisIsNotButton {
+  color: #ffffff44;
+}
+
 p {
   margin: 10px auto;
 }

@@ -17,7 +17,7 @@ dayjs.extend(relativeTime);
 dayjs.locale("th");
 
 function App() {
-  const modes = ["subordinate", "uncle", "barristor"];
+  const modes = ["spokesperson", "subordinate", "uncle", "barristor"];
   const [currentMode, setCurrentMode] = useState(modes[0]);
   const uncleMode = useMemo(() => currentMode == "uncle", [currentMode]);
   const subordinateMode = useMemo(
@@ -26,6 +26,10 @@ function App() {
   );
   const barristorMode = useMemo(
     () => currentMode == "barristor",
+    [currentMode]
+  );
+  const spokespersonMode = useMemo(
+    () => currentMode == "spokesperson",
     [currentMode]
   );
   const [elapsed, setElapsed] = useState("...");
@@ -43,29 +47,59 @@ function App() {
     setCurrentMode(modes[(currentModeIndex + 1) % modes.length]);
   }
 
+  function buttonLabel() {
+    switch (currentMode) {
+      case "spokesperson":
+        return "3. โฆษกลุง";
+      case "subordinate":
+        return "2. ฟังลูกน้องลุง";
+      case "uncle":
+        return "1. เชื่อลุงดีกว่า";
+      case "barristor":
+        return "?. เนติบริกรแถวบ้าน";
+      default:
+        break;
+    }
+  }
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setElapsed(dayjs().from(uncleSaidTime, true));
+      let now = dayjs();
+      setElapsed(now.from(uncleSaidTime, true));
 
       let promisedTime;
 
-      if (uncleMode) {
-        promisedTime = uncleSaidTime.add(120, "day");
-      } else if (subordinateMode) {
-        promisedTime = actualStartTime.add(120, "day");
-      } else {
-        promisedTime = luffyTime;
+      switch (currentMode) {
+        case "spokesperson":
+          promisedTime = uncleSaidTime;
+          break;
+        case "subordinate":
+          promisedTime = actualStartTime.add(120, "day");
+          break;
+        case "uncle":
+          promisedTime = uncleSaidTime.add(120, "day");
+          break;
+        case "barristor":
+          promisedTime = luffyTime;
+          break;
+        default:
+          promisedTime = uncleSaidTime.add(120, "day");
+          break;
       }
 
-      setDays(promisedTime.diff(dayjs(), "day").toLocaleString() + " วัน");
+      if (spokespersonMode) {
+        [now, promisedTime] = [promisedTime, now];
+      }
+
+      setDays(promisedTime.diff(now, "day").toLocaleString() + " วัน");
       setHours(
-        (promisedTime.diff(dayjs(), "hour") % 24).toLocaleString() + " ชั่วโมง"
+        (promisedTime.diff(now, "hour") % 24).toLocaleString() + " ชั่วโมง"
       );
       setMinutes(
-        (promisedTime.diff(dayjs(), "minute") % 60).toLocaleString() + " นาที"
+        (promisedTime.diff(now, "minute") % 60).toLocaleString() + " นาที"
       );
       setSeconds(
-        (promisedTime.diff(dayjs(), "second") % 60).toLocaleString() + " วินาที"
+        (promisedTime.diff(now, "second") % 60).toLocaleString() + " วินาที"
       );
     });
 
@@ -107,21 +141,40 @@ function App() {
             </p>
           </>
         )}
+        {spokespersonMode && (
+          <>
+            <p>
+              <s>
+                “ผมตั้งเป้าเอาไว้ว่า ประเทศไทยจะต้องเปิดประเทศทั้งประเทศ
+                ให้ได้ภายใน 120 วัน”
+              </s>
+            </p>
+            <p>
+              โฆษกลุง : 120 วันเป็นแค่หลักการ ไม่ใช่เรื่องกดปุ่ม{" "}
+              <u>ไม่ใช่การเคาท์ดาวน์</u>
+            </p>
+          </>
+        )}
 
-        <a id="toggleMode" onClick={() => cycleMode()}>
-          Mode :{" "}
-          {uncleMode
-            ? "เชื่อลุงดีกว่า"
-            : subordinateMode
-            ? "ฟังลูกน้องลุง"
-            : "เนติบริกรแถวบ้าน"}
-        </a>
+        <p>
+          <a id="toggleMode" onClick={() => cycleMode()}>
+            {buttonLabel()}
+          </a>
+          {spokespersonMode && (
+            <span id="thisIsNotButton">{"⬅ นี่ไม่ใช่ปุ่ม"}</span>
+          )}
+        </p>
 
-        <p>ตอนนี้ผ่านมาแล้ว {elapsed} ลุงเหลือเวลา...</p>
+        <p>
+          {spokespersonMode
+            ? "Count Up ตั้งแต่ลุงพูด ผ่านมาแล้ว..."
+            : `ตอนนี้ผ่านมาแล้ว ${elapsed} ลุงเหลือเวลา...`}
+        </p>
         <p id="remaining">{days}</p>
         <p id="remaining-detail">
           {hours} {minutes} {seconds}
         </p>
+
         <p id="social">
           <FacebookShareButton
             url="https://thailand-grand-opening.web.app/"

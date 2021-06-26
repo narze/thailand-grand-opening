@@ -13,6 +13,7 @@ import {
 
 import "./App.css";
 import Progress from "./components/progress";
+import Footer from "./components/footer";
 
 dayjs.extend(relativeTime);
 dayjs.locale("th");
@@ -194,22 +195,31 @@ function App() {
         <Progress animate={progress} />
 
         <p id="social">
-          <FacebookShareButton
-            url="https://thailand-grand-opening.web.app/"
-            quote={`ลุงเหลือเวลา ${days} ในการเปิดประเทศ`}
-          >
-            <FacebookIcon size={46} />
-          </FacebookShareButton>
-          <TwitterShareButton
-            url="https://thailand-grand-opening.web.app/"
-            title={`ลุงเหลือเวลา ${days} ในการเปิดประเทศ`}
-          >
-            <TwitterIcon size={46} />
-          </TwitterShareButton>
-          <LineShareButton url="https://thailand-grand-opening.web.app/">
-            <LineIcon size={46} />
-          </LineShareButton>
+          <span>แชร์</span>
+          <span>
+            <FacebookShareButton
+              url="https://thailand-grand-opening.web.app/"
+              quote={`ลุงเหลือเวลา ${days} ในการเปิดประเทศ`}
+            >
+              <FacebookIcon size={46} />
+            </FacebookShareButton>
+          </span>
+          <span>
+            <TwitterShareButton
+              url="https://thailand-grand-opening.web.app/"
+              title={`ลุงเหลือเวลา ${days} ในการเปิดประเทศ`}
+            >
+              <TwitterIcon size={46} />
+            </TwitterShareButton>
+          </span>
+          <span>
+            <LineShareButton url="https://thailand-grand-opening.web.app/">
+              <LineIcon size={46} />
+            </LineShareButton>
+          </span>
         </p>
+
+        <Footer />
       </header>
     </div>
   );

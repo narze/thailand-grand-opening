@@ -53,9 +53,19 @@ button {
 
 #social {
   position: fixed;
-  bottom: 14px;
-  right: 16px;
+  bottom: 30px;
   margin: 0;
+}
+
+#social span {
+  position: relative;
+  bottom: 16px;
+  margin-left: 12px;
+}
+
+#social button {
+  position: relative;
+  top: 16px;
 }
 
 #toggleMode {
@@ -84,4 +94,17 @@ button {
 
 p {
   margin: 10px auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+footer {
+  color: lightgrey;
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  font-size: 1rem;
 }

@@ -1,13 +1,10 @@
 import React from "react";
 
 const links = [
-  {
-    name: 'ร่วมช่วยกัน "ขอคนละชื่อรื้อระบอบประยุทธ์"',
-    url: "https://resolutionconformgen.web.app",
-  },
   { name: "Github", url: "https://github.com/narze/thailand-grand-opening" },
   { name: "@narze", url: "https://twitter.com/narze" },
   { name: "วาทะสลิ่มสุดเจ๋ง", url: "https://watasalim.vercel.app" },
+  { name: "ติด vs ตรวจ", url: "https://tid-vs-truad.vercel.app" },
 ];
 export default function Footer() {
   return (

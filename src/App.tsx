@@ -19,21 +19,22 @@ dayjs.extend(relativeTime);
 dayjs.locale("th");
 
 function App() {
-  const modes = ["spokesperson", "subordinate", "uncle", "barristor"];
+  const modes = ["uncle", "subordinate", "spokesperson", "barristor"];
   const [currentMode, setCurrentMode] = useState(modes[0]);
+  const [late, setLate] = useState(false);
   const uncleMode = useMemo(() => currentMode == "uncle", [currentMode]);
-  const subordinateMode = useMemo(
-    () => currentMode == "subordinate",
-    [currentMode]
-  );
-  const barristorMode = useMemo(
-    () => currentMode == "barristor",
-    [currentMode]
-  );
-  const spokespersonMode = useMemo(
-    () => currentMode == "spokesperson",
-    [currentMode]
-  );
+  // const subordinateMode = useMemo(
+  //   () => currentMode == "subordinate",
+  //   [currentMode]
+  // );
+  // const barristorMode = useMemo(
+  //   () => currentMode == "barristor",
+  //   [currentMode]
+  // );
+  // const spokespersonMode = useMemo(
+  //   () => currentMode == "spokesperson",
+  //   [currentMode]
+  // );
   const [elapsed, setElapsed] = useState("...");
   const [days, setDays] = useState("...");
   const [hours, setHours] = useState("...");
@@ -93,20 +94,23 @@ function App() {
       let totalDays = promisedTime.diff(uncleSaidTime, "day");
       let elapsedDays = now.diff(uncleSaidTime, "day");
 
-      if (spokespersonMode) {
-        totalDays = 120;
-        [now, promisedTime] = [promisedTime, now];
+      if (promisedTime < now) {
+        setLate(true)
       }
+      // if (spokespersonMode) {
+      //   totalDays = 120;
+      //   [now, promisedTime] = [promisedTime, now];
+      // }
 
-      setDays(promisedTime.diff(now, "day").toLocaleString() + " วัน");
+      setDays(Math.abs(promisedTime.diff(now, "day")).toLocaleString() + " วัน");
       setHours(
-        (promisedTime.diff(now, "hour") % 24).toLocaleString() + " ชั่วโมง"
+        (Math.abs(promisedTime.diff(now, "hour")) % 24).toLocaleString() + " ชั่วโมง"
       );
       setMinutes(
-        (promisedTime.diff(now, "minute") % 60).toLocaleString() + " นาที"
+        (Math.abs(promisedTime.diff(now, "minute")) % 60).toLocaleString() + " นาที"
       );
       setSeconds(
-        (promisedTime.diff(now, "second") % 60).toLocaleString() + " วินาที"
+        (Math.abs(promisedTime.diff(now, "second")) % 60).toLocaleString() + " วินาที"
       );
 
       const handicap = 5;
@@ -137,7 +141,7 @@ function App() {
             <p id="by">ลุง - 16 มิ.ย. 2564 18:00 น.</p>
           </>
         )}
-        {subordinateMode && (
+        {/* {subordinateMode && (
           <>
             <p>
               <s>
@@ -180,13 +184,11 @@ function App() {
           {spokespersonMode && (
             <span id="thisIsNotButton">{"⬅ นี่ไม่ใช่ปุ่ม"}</span>
           )}
-        </p>
+        </p>*/
 
-        <p>
-          {spokespersonMode
-            ? "Count Up ตั้งแต่ลุงพูด ผ่านมาแล้ว..."
-            : `ตอนนี้ผ่านมาแล้ว ${elapsed} ลุงเหลือเวลา...`}
-        </p>
+          <p>
+            {late ? `ตอนนี้ผ่านมาแล้ว ${elapsed} ซึ่งเลยมาแล้ว...` : `ตอนนี้ผ่านมาแล้ว ${elapsed} ลุงเหลือเวลา...`}
+          </p>}
         <p id="remaining">{days}</p>
         <p id="remaining-detail">
           {hours} {minutes} {seconds}
